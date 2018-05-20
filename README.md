@@ -1,2 +1,3 @@
-# php-sql
-db and queries for it on PHP
+# Pivosh Vladislav
+- K3140
+- PHP 7.1.7
