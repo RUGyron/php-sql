@@ -17,7 +17,7 @@
 <?php
 include 'connecting.php';
 
-$q = 'SELECT * from Соискатель;';
+$q = 'SELECT * from `Соискатель`;';
 $table = mysqli_query($link, $q);
 echo "<h2 align='center'>Соискатель<h2>";
 echo "<table border = 1 align=center><tr>
@@ -45,7 +45,7 @@ while($row = mysqli_fetch_array($table)) {
 }
 	echo "</table><br>";
 
-$q = 'SELECT * from Образование;';
+$q = 'SELECT * from `Образование`;';
 $table = mysqli_query($link, $q);
 echo "<h2 align='center'>Образование<h2>";
 echo "<table border = 1 align=center><tr>
@@ -71,11 +71,11 @@ if(isset($_GET['button']))
 {
 	$form_1 = strtr(trim($_GET['form_1']), '*', '%');
 	$form_2 = strtr(trim($_GET['form_2']), '*', '%');
-	$q = "SELECT Соискатель.ФИО_соискателя, Образование.Срок_обучения FROM Соискатель JOIN Образование
-		ON Соискатель.ИД_Образования = Соискатель.ИД_Образования
-		 WHERE  Соискатель.ФИО_соискателя LIKE '%" . $form_1 . "%' ";
+	$q = "SELECT `Соискатель`.`ФИО_соискателя`, `Образование`.`Срок_обучения` FROM `Соискатель` JOIN `Образование`
+		ON `Соискатель`.`ИД_Образования` = `Соискатель`.`ИД_Образования`
+		 WHERE  `Соискатель`.`ФИО_соискателя` LIKE '%" . $form_1 . "%' ";
 	if (!empty($form_2)) {
-			$q .= "AND Образование.Срок_обучения LIKE '%" . $form_2 . "%'";
+			$q .= "AND `Образование`.`Срок_обучения` LIKE '%" . $form_2 . "%'";
 	}
 	
 	$table = mysqli_query($link, $q);
