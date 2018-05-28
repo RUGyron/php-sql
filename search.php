@@ -17,52 +17,52 @@
 <?php
 include 'connecting.php';
 
-$q = 'SELECT * from `Соискатель`;';
+$q = 'SELECT * from Worker;';
 $table = mysqli_query($link, $q);
 echo "<h2 align='center'>Соискатель<h2>";
 echo "<table border = 1 align=center><tr>
-	<td>ИД_Соискателя</td>
-	<td>Профессия_соискателя</td>
-	<td>Опыт_работы_соискателя</td>
-	<td>ФИО_соискателя</td>
-	<td>желаемая_ЗП_соискателя</td>
-	<td>Разряд_соискателя</td>
-	<td>Даты_выплат_пособий</td>
-	<td>ИД_образования</td>
+	<td>id_worker</td>
+	<td>proffesion</td>
+	<td>experience</td>
+	<td>full_name</td>
+	<td>wanted_salary</td>
+	<td>level</td>
+	<td>dates</td>
+	<td>id_education</td>
 	</tr>";
 
 while($row = mysqli_fetch_array($table)) {
 			echo "<tr>
-			<td>".$row['ИД_соиcкателя']."</td>
-			<td>".$row['Профессия_соискателя']."</td>
-			<td>".$row['Опыт_работы_соискателя']."</td>
-			<td>".$row['ФИО_соискателя']."</td>
-			<td>".$row['Желаемая_ЗП_соискателя']."</td>
-			<td>".$row['Разряд_соискателя']."</td>
-			<td>".$row['Даты_выплат_пособий']."</td>
-			<td>".$row['ИД_образования']."</td>
+			<td>".$row['id_worker']."</td>
+			<td>".$row['proffesion']."</td>
+			<td>".$row['experience']."</td>
+			<td>".$row['full_name']."</td>
+			<td>".$row['wanted_salary']."</td>
+			<td>".$row['level']."</td>
+			<td>".$row['dates']."</td>
+			<td>".$row['id_education']."</td>
 			</tr>";
 }
 	echo "</table><br>";
 
-$q = 'SELECT * from `Образование`;';
+$q = 'SELECT * from Education;';
 $table = mysqli_query($link, $q);
 echo "<h2 align='center'>Образование<h2>";
 echo "<table border = 1 align=center><tr>
-	<td>ИД_образования</td>
-	<td>Срок_обучения</td>
-	<td>Место_обучения</td>
-	<td>Компетенция</td>
-	<td>Перспектива</td>
+	<td>id_education</td>
+	<td>duration</td>
+	<td>placement</td>
+	<td>competence</td>
+	<td>perspective</td>
 	</tr>";
 
 while($row = mysqli_fetch_array($table)) {
 			echo "<tr>
-			<td>".$row['ИД_образования']."</td>
-			<td>".$row['Срок_обучения']."</td>
-			<td>".$row['Место_обучения']."</td>
-			<td>".$row['Компетенция']."</td>
-			<td>".$row['Перспектива']."</td>
+			<td>".$row['id_education']."</td>
+			<td>".$row['duration']."</td>
+			<td>".$row['placement']."</td>
+			<td>".$row['competence']."</td>
+			<td>".$row['perspective']."</td>
 			</tr>";
 }
 	echo "</table><br>";
@@ -71,18 +71,18 @@ if(isset($_GET['button']))
 {
 	$form_1 = strtr(trim($_GET['form_1']), '*', '%');
 	$form_2 = strtr(trim($_GET['form_2']), '*', '%');
-	$q = "SELECT `Соискатель`.`ФИО_соискателя`, `Образование`.`Срок_обучения` FROM `Соискатель` JOIN `Образование`
-		ON `Соискатель`.`ИД_Образования` = `Соискатель`.`ИД_Образования`
-		 WHERE  `Соискатель`.`ФИО_соискателя` LIKE '%" . $form_1 . "%' ";
+	$q = "SELECT Worker.full_name, Education.duration FROM Worker JOIN Education
+		ON Worker.id_education = Worker.id_education
+		 WHERE  Worker.full_name LIKE '%" . $form_1 . "%' ";
 	if (!empty($form_2)) {
-			$q .= "AND `Образование`.`Срок_обучения` LIKE '%" . $form_2 . "%'";
+			$q .= "AND Education.duration LIKE '%" . $form_2 . "%'";
 	}
 	
 	$table = mysqli_query($link, $q);
 	echo "<table border = 1 align=center><tr><td>ФИО</td><td>Срок</td></tr>";
 	
 	while($row = mysqli_fetch_array($table)) {
-			echo "<tr><td>" . $row['ФИО_соискателя'] . "</td><td>" . $row['Срок_обучения'] . "</td></tr>";
+			echo "<tr><td>" . $row['full_name'] . "</td><td>" . $row['duration'] . "</td></tr>";
 	}
 	echo "</table>";
 	mysqli_close($link);

@@ -1,17 +1,24 @@
 <?php
 include 'connecting.php';
 
-$q = "SELECT new_table.`ФИО_Соискателя`, new_table.`Компетенция`, new_table.`Название_разряда` 
-from (select `Курсы`.`Название_разряда`, `Соискатель`.`ФИО_Соискателя`, `Образование`.`Компетенция`
-from `Курсы` inner join `Соискатель`
-on `Курсы`.`Разряд_соискателя`=`Соискатель`.`Разряд_соискателя`
-inner join `Образование` on `Соискатель`.`ИД_образования`=`Образование`.`ИД_Образования`) as new_table
-where new_table.`Название_разряда`='Опытный';";
+$q = "SELECT *
+from (select Courses.name, Worker.full_name, Education.competence, Worker.id_worker
+from Courses inner join Worker
+on Courses.level=Worker.level
+inner join Education on Worker.id_education=Education.id_education) as new_table
+where new_table.name='medium';";
 
 $table = mysqli_query($link, $q);
-echo "<table border = 1 align=center> <tr> <th> ФИО_Соискателя </th> <th> Компетенция </th> <th> Название_разряда </th> </tr>";
+
+echo "<table border = 1 align=center> <tr> <th> ФИО_Соискателя </th> <th> Компетенция </th> <th> Название_разряда </th> <th>Редактировать</th> <th>Удалить</th> </tr>";
 while($row = mysqli_fetch_array($table)) {
-	echo "<tr><td>" . $row['ФИО_Соискателя']. "</td><td>" . $row['Компетенция'] . "</td><td>" . $row['Название_разряда'] . "</td></tr>";
+	echo "<tr>
+	<td>" . $row['full_name']. "</td>
+	<td>" . $row['competence'] . "</td>
+	<td>" . $row['name'] . "</td>
+	<td align='center'><a href = '/edit.php?=". $row['id_worker'] . "'><img src='https://www.download3k.ru/icons/Notepad-192284.png?v=1'></a></td>
+	<td align='center'><a href = '/delete.php?id_worker=". $row['id_worker'] . "'><img src='http://www.advanceduninstaller.com/a6072e1ef2e728097ebd0a4695ab3132-icon.ico'></a></td>
+	</tr>";
 }
 echo "</table>";
 mysqli_close($link);
