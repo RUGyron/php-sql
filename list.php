@@ -19,5 +19,5 @@ while($row = mysqli_fetch_array($table)) {
 	<td align='center'><a href = '/delete.php?id_worker=". $row['id_worker'] . "'><img src='http://www.advanceduninstaller.com/a6072e1ef2e728097ebd0a4695ab3132-icon.ico'></a></td>
 	</tr>";
 }
-echo "</table>";
+echo "<tr><td colspan='5' align='center'><a href = '/add.php?'><img src='https://www.download3k.ru/icons/Add-Email-ActiveX-Professional-141096.png?v=1'></a></td></tr></table>";
 mysqli_close($link);
